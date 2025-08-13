@@ -16,11 +16,6 @@ $speakerController = new SpeakerController(new FileHandler($path));
 
 $app = AppFactory::create();
 
-$app->get('/api/test', function (Request $request, Response $response, array $args) {
-    $response->getBody()->write("TEST FROM API!!!");
-    return $response;
-});
-
 $app->get('/api/speaker', $speakerController->handle());
 
 //$app->get('/api/speaker', \SpeakerController::class . ':show()');

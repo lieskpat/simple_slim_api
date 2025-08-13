@@ -24,12 +24,19 @@ class SpeakerController {
 
     public function handle() {
 
-        //$xml = $this->getFileHandler()->loadXMLFile($this->getFileHandler()->getPath());
-        //$json = $this->getFileHandler()->xmlToJson($xml);
+        $xml = $this->getFileHandler()->loadXMLFile($this->getFileHandler()->getPath());
 
         return function (Request $request, Response $response, array $args) {
-            
+
+            $payload = json_encode($xml);
+
+            $response->getBody()->write($payload);
+
             $response->getBody()->write("Hello From Controller");
-            return $response;};
+        
+            return $response
+                ->withHeader('Content-Type', 'application/json')
+                ->withStatus(201);
+        };
     }
 }
