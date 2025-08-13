@@ -1,0 +1,42 @@
+# Definition von Services
+services:
+  # Benamung (DNS Hostname)
+  # entspricht network --alias
+  api:
+    # evtl. ist container_name der Hostname
+    container_name: api
+    # Pfad zum Dockerfile
+    build: ./api
+    ports:
+      # Host Port 3000 auf Containerport 3000 
+      - 3000:3000
+    # Verbinde mit Network test
+    networks: 
+      - test
+  # Benamung (DNS Hostname)
+  ui:
+    container_name: ui
+    # wird nicht ueber Dockerfile gebaut
+    image: nginx:${NGINX_VERSION}  
+    ports:
+      - 4000:80
+    environment:
+      -
+    env_file:
+      - .env
+    volumes:
+      # relativer Pfad
+      - ./ui:/usr/share/nginx/html:ro
+    depends_on: api
+    # Verbinde mit Network test
+    networks:
+      - test
+    restart: allways
+    dns:
+      - 8.8.8.8
+
+
+networks:
+  # netzwerk test anlegen
+  test:
+    driver: bridge
