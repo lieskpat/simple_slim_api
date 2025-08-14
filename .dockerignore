@@ -1,0 +1,8 @@
+compose.yml
+/vendor
+.dockerignor
+.gitignore
+Dockerfile
+StarDiva.xml
+/.git
+compose_example.yml

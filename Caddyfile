@@ -1,0 +1,12 @@
+:8080 {
+
+    # path to site directory
+    root * /var/www/html
+
+    # enable static file server
+    file_server
+
+    # serve a PHP site through php-fpm
+    # hostname is php-fpm in docker network
+    php_fastcgi php-fpm:9000
+}
