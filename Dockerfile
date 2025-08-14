@@ -25,5 +25,7 @@ RUN composer dumpautoload --optimize
 
 FROM base AS final
 
+# ist das kopieren in den WEBSERVER CONTAINER UEBERHAUPT NOTWENDIG?
+# es sind ja alles php Dateien, die nur im php-fpm Container liegen muessen
 COPY --from=builder /api /var/www/html
 

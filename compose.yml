@@ -14,6 +14,8 @@ services:
     image: php:8.4-fpm
     networks:
       - speaker_api
+    volumes:
+      - .:/var/www/html
 
 networks:
   speaker_api:
