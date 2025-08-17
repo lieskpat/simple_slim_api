@@ -7,6 +7,7 @@ namespace Controllers;
 use PSR\Http\Message\ServerRequestInterface as Request;
 use PSR\Http\Message\ResponseInterface as Response;
 use Handler\FileHandler;
+use \SimpleXMLElement;
 
 class SpeakerController {
 
@@ -24,15 +25,18 @@ class SpeakerController {
 
     public function handle() {
 
-        $xml = $this->getFileHandler()->loadXMLFile($this->getFileHandler()->getPath());
+        $xmlContent = new SimpleXMLElement($this->getFileHandler()->getFileContent('./StarDiva.xml'));
+
+        //$xmlContent = simplexml_load_file('StarDiva.xml');
+        //$xmlContent = simplexml_load_file('/../../StarDiva.xml');
 
         return function (Request $request, Response $response, array $args) {
 
-            $payload = json_encode($xml);
+            $payload = json_encode($xmlContent);
 
             $response->getBody()->write($payload);
 
-            $response->getBody()->write("Hello From Controller");
+            $response->getBody()->write(__DIR__ . '/StarDiva.xml');
         
             return $response
                 ->withHeader('Content-Type', 'application/json')

@@ -3,6 +3,6 @@ compose.yml
 .dockerignor
 .gitignore
 Dockerfile
-StarDiva.xml
 /.git
 compose_example.yml
+Caddyfile

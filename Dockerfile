@@ -1,13 +1,18 @@
-FROM caddy:2.10.0 AS base
+# FROM caddy:2.10.0 AS base
 
 # document root is /var/www/html
-WORKDIR /var/www/html
+# WORKDIR /var/www/html
 
-COPY Caddyfile /etc/caddy/Caddyfile
+# COPY Caddyfile /etc/caddy/Caddyfile
 # RUN chown -R caddy:caddy /var/www/html
 # USER caddy
 
+FROM php:8.4-fpm AS base
 
+# Todo smbclient installieren
+RUN apt-get update && \
+    apt-get install -y smbclient && \
+    apt-get clean
 
 #####################################################
 

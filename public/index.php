@@ -7,12 +7,15 @@ use PSR\Http\Message\ServerRequestInterface as Request;
 use PSR\Http\Message\ResponseInterface as Response;
 use Slim\Factory\AppFactory;
 use Handler\FileHandler;
+use Handler\SMB;
+use Icewind\SMB\BasicAuth;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-// Todo aus config holen
-$path = '\\\\11.9.95.141\\Quad\\StarDiva.xml'; 
-$speakerController = new SpeakerController(new FileHandler($path));
+// Todo Zugangsdaten aus config oder env holen
+$authSMB = new BasicAuth('user', 'workgroup', 'password'); 
+$smb = new SMB($authSMB, '11.9.95.141', 'qaud4');
+$speakerController = new SpeakerController(new FileHandler($smb));
 
 $app = AppFactory::create();
 

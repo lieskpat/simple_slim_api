@@ -1,12 +1,15 @@
 :8080 {
 
     # path to site directory
-    root * /var/www/html
+    root * /var/www/html/public
+
+    # serve files directly if they can be found (e.g. CSS or JS files in public/)
+    encode zstd gzip
 
     # enable static file server
     file_server
 
     # serve a PHP site through php-fpm
     # hostname is php-fpm in docker network
-    php_fastcgi php-fpm:9000
+    php_fastcgi php-fpm:9000 
 }

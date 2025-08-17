@@ -4,31 +4,21 @@ declare(strict_types=1);
 
 namespace Handler;
 
+use Handler\SMB;
+
 class FileHandler {
 
-    private string $path;
+    private SMB $smb;
 
-    public function __construct(string $path){
+    public function __construct(SMB $smb){
 
-        $this->path = $path;
+        $this->smb = $smb;
+        
     }
 
-    public function getPath(){
-        return $this->path;
+    public function getFileContent(string $fileName) {
+
+        return $this->smb->getFileContent($fileName);
     }
-
-    public function loadXMLFile() {
-
-        if (file_exists($this->getPath())) {
-            $simpleXMLElement = simplexml_load_file($this->getPath());
-        }
-        return simpleXMLElement;
-    }
-
-    public function xmlToJson(SimpleXMLElement $xmlObject) {
-        return json_encode($xmlObject);
-    }
-
-
 
 }
