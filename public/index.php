@@ -13,7 +13,8 @@ use Dotenv\Dotenv;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-$dotenv = Dotenv::createImmutable(__DIR__);
+$rootDir = dirname(__DIR__, 1);
+$dotenv = Dotenv::createImmutable($rootDir);
 $dotenv->safeLoad();
 
 // Todo Zugangsdaten aus config oder env holen
