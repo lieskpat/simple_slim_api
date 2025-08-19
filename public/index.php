@@ -9,12 +9,16 @@ use Slim\Factory\AppFactory;
 use Handler\FileHandler;
 use Handler\SMB;
 use Icewind\SMB\BasicAuth;
+use Dotenv\Dotenv;
 
 require __DIR__ . '/../vendor/autoload.php';
 
+$dotenv = Dotenv::createImmutable(__DIR__);
+$dotenv->safeLoad();
+
 // Todo Zugangsdaten aus config oder env holen
-$authSMB = new BasicAuth('user', 'workgroup', 'password'); 
-$smb = new SMB($authSMB, '11.9.95.141', 'qaud4');
+$authSMB = new BasicAuth($_ENV['SMB_USER'], $_ENV['SMB_WORKGROUP'], $_ENV['SMB_PASSWORD']); 
+$smb = new SMB($authSMB, $_ENV['SMB_ADDRESS'], $_ENV['SMB_SHARE']);
 $speakerController = new SpeakerController(new FileHandler($smb));
 
 $app = AppFactory::create();
