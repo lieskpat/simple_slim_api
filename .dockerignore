@@ -6,3 +6,4 @@ Dockerfile
 /.git
 compose_example.yml
 Caddyfile
+.env.example

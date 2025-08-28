@@ -14,13 +14,15 @@ class SMB {
 
     private IShare $share;
 
-    private IAuth $auth;
+    public function __construct(private IAuth $auth, private string $smbServerAddress, private string $shareName) {
 
-    public function __construct(IAuth $auth, string $smbServerAddress, string $shareName) {
+        try {
+            $this->smbConnection = $this->connectShare($auth, $smbServerAddress);
+        } catch (Exception $e) {
 
-        $this->auth = $auth;
-        // Todo try catch Block Exception abfangen
-        $this->smbConnection = $this->connectShare($auth, $smbServerAddress);
+            //$e->getMessage();
+            echo 'cant connect';
+        }
         $this->setShare($shareName);
 
     }

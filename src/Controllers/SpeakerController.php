@@ -11,11 +11,7 @@ use \SimpleXMLElement;
 
 class SpeakerController {
 
-    private FileHandler $fileHandler;
-
-    public function __construct(FileHandler $fileHandler) {
-
-        $this->fileHandler = $fileHandler;
+    public function __construct(private FileHandler $fileHandler) {
 
     }
 
@@ -23,24 +19,20 @@ class SpeakerController {
         return $this->fileHandler;
     }
 
-    public function handle() {
+    public function __invoke(Request $request, Response $response, array $args) {
 
-        $xmlContent = new SimpleXMLElement($this->getFileHandler()->getFileContent('./StarDiva.xml'));
+    }
 
-        //$xmlContent = simplexml_load_file('StarDiva.xml');
-        //$xmlContent = simplexml_load_file('/../../StarDiva.xml');
-
-        return function (Request $request, Response $response, array $args) {
-
-            $payload = json_encode($xmlContent);
-
-            $response->getBody()->write($payload);
-
-            $response->getBody()->write(__DIR__ . '/StarDiva.xml');
+    public function handle(Request $request, Response $response, array $args) {
         
-            return $response
+        //$xmlContent = new SimpleXMLElement($this->getFileHandler()->getFileContent(APP_ROOT . 'StarDiva.xml'));
+
+        $xmlContent = simplexml_load_file(APP_ROOT . '/StarDiva.xml');
+        $payload = json_encode($xmlContent);
+        $response->getBody()->write($payload);
+        return $response
                 ->withHeader('Content-Type', 'application/json')
                 ->withStatus(201);
-        };
+        
     }
 }

@@ -6,27 +6,27 @@ use Controllers\SpeakerController;
 use PSR\Http\Message\ServerRequestInterface as Request;
 use PSR\Http\Message\ResponseInterface as Response;
 use Slim\Factory\AppFactory;
-use Handler\FileHandler;
-use Handler\SMB;
-use Icewind\SMB\BasicAuth;
-use Dotenv\Dotenv;
+use DI\ContainerBuilder;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-$rootDir = dirname(__DIR__, 1);
-$dotenv = Dotenv::createImmutable($rootDir);
-$dotenv->safeLoad();
+define('APP_ROOT', dirname(__DIR__));
 
-// Todo Zugangsdaten aus config oder env holen
-$authSMB = new BasicAuth($_ENV['SMB_USER'], $_ENV['SMB_WORKGROUP'], $_ENV['SMB_PASSWORD']); 
-$smb = new SMB($authSMB, $_ENV['SMB_ADDRESS'], $_ENV['SMB_SHARE']);
-$speakerController = new SpeakerController(new FileHandler($smb));
+$containerBuilder = new ContainerBuilder;
+$container = $containerBuilder->addDefinitions(APP_ROOT . '/config/definitions.php')->build();
+
+AppFactory::setContainer($container);
 
 $app = AppFactory::create();
 
-$app->get('/api/speaker', $speakerController->handle());
+$app->get('/api/handle', SpeakerController::class . ':handle');
+$app->get('/api/speaker', SpeakerController::class);
 
-//$app->get('/api/speaker', \SpeakerController::class . ':show()');
+$app->get('/', function (Request $request, Response $response, array $args) {
+    
+    $response->getBody()->write("Hello");
+    return $response;
+    });
 
 $app->run();
 
