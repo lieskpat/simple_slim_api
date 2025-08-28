@@ -23,7 +23,7 @@ services:
     networks:
       - speaker_api
     volumes:
-    #  - .:/var/www/html
+      - .:/var/www/html
       - ./Caddyfile:/etc/caddy/Caddyfile
 
 networks:

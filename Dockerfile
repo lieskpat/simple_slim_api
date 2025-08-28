@@ -7,13 +7,17 @@
 # RUN chown -R caddy:caddy /var/www/html
 # USER caddy
 
-FROM php:8.4-fpm AS base
+FROM php:8.4-fpm-alpine AS base
 
-# Todo smbclient installieren
-RUN apt-get update && \
-    apt-get install -y smbclient && \
-    apt-get clean
+# smbclient for Debian
+#RUN apt-get update && \
+#    apt-get install -y smbclient && \
+#    apt-get clean
 
+# smbclient for alpine
+RUN apk update && \
+    apk add samba-client && \
+    apk cache clean
 #####################################################
 
 FROM composer:2.8.10 AS builder

@@ -8,12 +8,8 @@ use Handler\SMB;
 
 class FileHandler {
 
-    private SMB $smb;
+    public function __construct(private SMB $smb){
 
-    public function __construct(SMB $smb){
-
-        $this->smb = $smb;
-        
     }
 
     public function getFileContent(string $fileName) {
