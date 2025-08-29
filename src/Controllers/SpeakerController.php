@@ -32,4 +32,20 @@ class SpeakerController
             ->withHeader('Content-Type', 'application/json')
             ->withStatus(201);
     }
+
+    public function handlePost(Request $request, Response $response, array $args)
+    {
+        // Todo post body Validierung
+        // json can be processed by middleware
+        $body = $request->getParsedBody();
+        $fileName = $body['fileName'];
+        $this->getFileHandler()->setFilename($fileName);
+
+        $xmlContent = new SimpleXMLElement($this->getFileHandler()->getFileContent());
+        $payload = json_encode($xmlContent);
+        $response->getBody()->write($payload);
+        return $response
+            ->withHeader('Content-Type', 'application/json')
+            ->withStatus(201);
+    }
 }
