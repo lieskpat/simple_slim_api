@@ -25,7 +25,7 @@ class SpeakerController
         return $this->fileHandler;
     }
 
-    public function handle()
+    public function handle(Request $request, Response $response, array $args)
     {
 
         $xmlContent = new SimpleXMLElement($this->getFileHandler()->getFileContent('./StarDiva.xml'));
@@ -33,17 +33,16 @@ class SpeakerController
         //$xmlContent = simplexml_load_file('StarDiva.xml');
         //$xmlContent = simplexml_load_file('/../../StarDiva.xml');
 
-        return function (Request $request, Response $response, array $args) {
 
-            $payload = json_encode($xmlContent);
 
-            $response->getBody()->write($payload);
+        $payload = json_encode($xmlContent);
 
-            $response->getBody()->write(__DIR__ . '/StarDiva.xml');
+        $response->getBody()->write($payload);
 
-            return $response
-                ->withHeader('Content-Type', 'application/json')
-                ->withStatus(201);
-        };
+        //$response->getBody()->write(__DIR__ . '/StarDiva.xml');
+
+        return $response
+            ->withHeader('Content-Type', 'application/json')
+            ->withStatus(201);
     }
 }
