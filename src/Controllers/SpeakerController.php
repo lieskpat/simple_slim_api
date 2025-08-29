@@ -9,21 +9,24 @@ use PSR\Http\Message\ResponseInterface as Response;
 use Handler\FileHandler;
 use \SimpleXMLElement;
 
-class SpeakerController {
+class SpeakerController
+{
 
     private FileHandler $fileHandler;
 
-    public function __construct(FileHandler $fileHandler) {
+    public function __construct(FileHandler $fileHandler)
+    {
 
         $this->fileHandler = $fileHandler;
-
     }
 
-    public function getFileHandler() {
+    public function getFileHandler()
+    {
         return $this->fileHandler;
     }
 
-    public function handle() {
+    public function handle()
+    {
 
         $xmlContent = new SimpleXMLElement($this->getFileHandler()->getFileContent('./StarDiva.xml'));
 
@@ -37,7 +40,7 @@ class SpeakerController {
             $response->getBody()->write($payload);
 
             $response->getBody()->write(__DIR__ . '/StarDiva.xml');
-        
+
             return $response
                 ->withHeader('Content-Type', 'application/json')
                 ->withStatus(201);

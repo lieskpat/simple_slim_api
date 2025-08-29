@@ -6,15 +6,14 @@ namespace Handler;
 
 use Handler\SMB;
 
-class FileHandler {
+class FileHandler
+{
 
-    public function __construct(private SMB $smb){
+    public function __construct(private SMB $smb) {}
 
-    }
-
-    public function getFileContent(string $fileName) {
+    public function getFileContent(string $fileName)
+    {
 
         return $this->smb->getFileContent($fileName);
     }
-
 }
