@@ -8,14 +8,18 @@ use PSR\Http\Message\ServerRequestInterface as Request;
 use PSR\Http\Message\ResponseInterface as Response;
 use Handler\FileHandler;
 use \SimpleXMLElement;
+use Valitron\Validator;
 
 class SpeakerController
 {
     private FileHandler $fileHandler;
 
-    public function __construct(FileHandler $fileHandler)
+    public function __construct(FileHandler $fileHandler, private Validator $validator)
     {
         $this->fileHandler = $fileHandler;
+        $this->validator->mapFieldsRules([
+            'fileName' => ['required']
+        ]);
     }
 
     public function getFileHandler()
@@ -38,6 +42,14 @@ class SpeakerController
         // Todo post body Validierung
         // json can be processed by middleware
         $body = $request->getParsedBody();
+        $this->validator = $this->validator->withData($body);
+
+        if (!$this->validator->validate()) {
+            $response->getBody()
+                ->write(json_encode($this->validator->errors()));
+            return $response->withStatus(422);
+        }
+
         $fileName = $body['fileName'];
         $this->getFileHandler()->setFilename($fileName);
 

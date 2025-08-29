@@ -34,7 +34,7 @@ $errorHandler->forceContentType('application/json');
 
 // write routes
 $app->get('/api/speaker', SpeakerController::class . ':handle');
-$app->get('/', $container->get(HealthCheckController::class)->handle());
+$app->get('/', HealthCheckController::class . ':handle');
 $app->get('/check', HealthCheckController::class);
 $app->post('/api/speaker', SpeakerController::class . ':handlePost');
 
