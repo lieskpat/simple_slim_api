@@ -11,12 +11,10 @@ use \SimpleXMLElement;
 
 class SpeakerController
 {
-
     private FileHandler $fileHandler;
 
     public function __construct(FileHandler $fileHandler)
     {
-
         $this->fileHandler = $fileHandler;
     }
 
@@ -27,20 +25,9 @@ class SpeakerController
 
     public function handle(Request $request, Response $response, array $args)
     {
-
-        $xmlContent = new SimpleXMLElement($this->getFileHandler()->getFileContent('./StarDiva.xml'));
-
-        //$xmlContent = simplexml_load_file('StarDiva.xml');
-        //$xmlContent = simplexml_load_file('/../../StarDiva.xml');
-
-
-
+        $xmlContent = new SimpleXMLElement($this->getFileHandler()->getFileContent());
         $payload = json_encode($xmlContent);
-
         $response->getBody()->write($payload);
-
-        //$response->getBody()->write(__DIR__ . '/StarDiva.xml');
-
         return $response
             ->withHeader('Content-Type', 'application/json')
             ->withStatus(201);

@@ -17,18 +17,12 @@ class SMB
 
     public function __construct(private IAuth $auth, private string $smbServerAddress, private string $shareName)
     {
-
-        try {
-            $this->smbConnection = $this->connectShare($auth, $smbServerAddress);
-        } catch (Error $e) {
-            echo 'Error';
-        }
+        $this->smbConnection = $this->connectShare($auth, $smbServerAddress);
         $this->setShare($shareName);
     }
 
     private function connectShare(IAuth $auth, $smbServerAddress)
     {
-
         $serverFactory = new ServerFactory();
         $smbConnection = $serverFactory->createServer($smbServerAddress, $auth);
         return $smbConnection;
@@ -36,26 +30,25 @@ class SMB
 
     public function setShare(string $shareName)
     {
-
         // Todo sicherstellen das smbConnection gesetzt ist
         $this->share = $this->smbConnection->getShare($shareName);
     }
 
     public function getShare()
     {
-
         return $this->share;
     }
 
     public function listFilesInShare(): array
     {
         // list files in the share
-        return $this->getShare()->dir();
+        return $this->getShare()->dir($this->shareName);
     }
 
     public function getFileContent(string $fileName)
     {
         $stream = $this->getShare()->read($fileName);
+        // stream schliessen?
         return stream_get_contents($stream);
     }
 
