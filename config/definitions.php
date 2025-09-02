@@ -1,12 +1,12 @@
 <?php
 
-use Dotenv\Dotenv;
+//use Dotenv\Dotenv;
 use Handler\SMB;
 use Icewind\SMB\BasicAuth;
 use Handler\FileHandler;
 
-$dotenv = Dotenv::createImmutable(APP_ROOT);
-$dotenv->safeLoad();
+//$dotenv = Dotenv::createImmutable(APP_ROOT);
+//$dotenv->safeLoad();
 
 return [
 

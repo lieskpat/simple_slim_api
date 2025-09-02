@@ -6,6 +6,8 @@ services:
       - speaker_api
     depends_on: 
       - caddy
+    env_file:
+      - .env
 
 #  php:
 #    container_name: php-fpm
