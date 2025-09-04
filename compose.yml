@@ -1,7 +1,9 @@
 services:
   php-fpm:
     container_name: php-fpm
-    build: .
+    build: 
+      context: .
+      dockerfile: ./service_php_fpm/Dockerfile
     networks:
       - speaker_api
     depends_on: 
@@ -9,24 +11,15 @@ services:
     env_file:
       - .env
 
-#  php:
-#    container_name: php-fpm
-#    image: php:8.4-fpm
-#    networks:
-#      - speaker_api
-#    volumes:
-#     - .:/var/www/html
-
   caddy:
     container_name: caddy
-    image: caddy:2.10.0
+    build:
+      context: .
+      dockerfile: ./service_caddy/Dockerfile
     ports:
       - 8080:8080
     networks:
       - speaker_api
-    volumes:
-      - .:/var/www/html
-      - ./Caddyfile:/etc/caddy/Caddyfile
 
 networks:
   speaker_api:

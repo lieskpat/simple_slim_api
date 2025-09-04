@@ -1,12 +1,8 @@
 compose.yml
-/vendor
+/app/vendor
 .dockerignore
 .gitignore
-Dockerfile
 /.git
 compose_example.yml
-Caddyfile
 .env
 .env.example
-StarDiva.xml
-note.xml
