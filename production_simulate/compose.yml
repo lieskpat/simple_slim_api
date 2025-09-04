@@ -1,0 +1,22 @@
+services:
+  php-fpm:
+    container_name: php-fpm
+    image: code.dev.lt.lsa-net.de:3000/lieske/simple-speaker-api-php-fpm-image
+    networks:
+      - speaker_api
+    depends_on: 
+      - caddy
+    env_file:
+      - ../.env
+
+  caddy:
+    container_name: caddy
+    image: code.dev.lt.lsa-net.de:3000/lieske/simple-speaker-api-caddy-image
+    ports:
+      - 8080:8080
+    networks:
+      - speaker_api
+
+networks:
+  speaker_api:
+    driver: bridge
