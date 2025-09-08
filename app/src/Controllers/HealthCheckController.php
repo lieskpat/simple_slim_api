@@ -16,6 +16,7 @@ class HealthCheckController
             'php_version' => PHP_VERSION,
             'sapi' => php_sapi_name(),
             'extensions' => get_loaded_extensions(),
+            'hallo' => 'Hallo World',
         ];
 
         $response->getBody()->write(json_encode($data));

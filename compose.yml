@@ -10,6 +10,11 @@ services:
       - caddy
     env_file:
       - .env
+    develop:
+      watch:
+        - action: sync
+          path: ./app
+          target: /var/www/html
 
   caddy:
     container_name: caddy
@@ -20,6 +25,11 @@ services:
       - 8080:8080
     networks:
       - speaker_api
+    develop:
+      watch:
+        - action: sync
+          path: ./app
+          target: /var/www/html
 
 networks:
   speaker_api:
